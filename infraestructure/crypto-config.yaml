@@ -1,0 +1,15 @@
+OrdererOrgs:
+
+  - Name: Orderer
+    Domain: emerald.com
+    Specs:
+      - Hostname: orderer
+
+PeerOrgs:
+
+  - Name: Ruby
+    Domain: ruby.emerald.com
+    Template:
+      Count: 1
+    Users:
+      Count: 1

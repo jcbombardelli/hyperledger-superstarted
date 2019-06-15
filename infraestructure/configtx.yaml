@@ -1,0 +1,60 @@
+Organizations:
+
+    - &OrdererOrg
+        Name: OrdererOrg
+        ID: OrdererMSP
+        MSPDir: crypto-config/ordererOrganizations/emerald.com/msp
+
+    - &Ruby
+        Name: RubyMSP
+        ID: RubyMSP
+        MSPDir: crypto-config/peerOrganizations/ruby.emerald.com/msp
+        AnchorPeers:
+            - Host: peer0.ruby.emerald.com
+              Port: 7051
+
+Application: &ApplicationDefaults
+
+    Organizations:
+
+
+Orderer: &OrdererDefaults
+
+    OrdererType: solo
+
+    Addresses:
+        - orderer.emerald.com:7050
+
+    BatchTimeout: 1s
+
+    BatchSize:
+
+        MaxMessageCount: 5
+        AbsoluteMaxBytes: 99 MB
+        PreferredMaxBytes: 512 KB
+
+    Kafka:
+        Brokers:
+            - 127.0.0.1:9092
+
+    Organizations:
+
+
+Profiles:
+
+    OneOrgOrdererGenesis:
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+        Consortiums:
+            JewelConsortium:
+                Organizations:
+                    - *Ruby
+    OneOrgChannel:
+        Consortium: JewelConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Ruby
+
