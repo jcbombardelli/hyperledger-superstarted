@@ -1,0 +1,13 @@
+// createMisteryBox
+{
+    "serial":"123450",
+    "size":"Tiny",
+    "model":"Blue",
+    "owner":"Caio"
+}
+
+// transferMisterybox 
+{
+    "serial":"123450",
+    "new_owner":"Lucy"
+}

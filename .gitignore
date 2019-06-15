@@ -12,10 +12,10 @@
 *.out
 
 #node modules
-*/node_modules
+*node_modules
 
 #Hyperledger Fabric and Keys Store
 /bin
 /infraestructure/config
 /infraestructure/crypto-config
-/infraestructure/.hfc-key-store
+/infraestructure/hfc-key-store

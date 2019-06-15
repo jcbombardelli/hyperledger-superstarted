@@ -42,11 +42,7 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 	// Retrieve the requested Smart Contract function and arguments
 	function, args := APIstub.GetFunctionAndParameters()
 
-	// Route to the appropriate handler function to interact with the ledger appropriately
-	if function == "queryMisterybox" {
-		return s.queryMisterybox(APIstub, args)
-
-	} else if function == "createMisterybox" {
+	if function == "createMisterybox" {
 		return s.createMisterybox(APIstub, args)
 
 	} else if function == "queryAllMisteryboxes" {
@@ -57,16 +53,6 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 
 	}
 	return shim.Error("Invalid Smart Contract function name.")
-}
-
-func (s *SmartContract) queryMisterybox(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
-
-	if len(args) != 1 {
-		return shim.Error("Incorrect number of arguments. Expecting 1")
-	}
-
-	cmtbxAsBytes, _ := APIstub.GetState(args[0])
-	return shim.Success(cmtbxAsBytes)
 }
 
 func (s *SmartContract) createMisterybox(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
@@ -145,11 +131,14 @@ func (s *SmartContract) transferMisterybox(APIstub shim.ChaincodeStubInterface, 
 			return shim.Error(JSONResponseError("", "All fields are required", 3))
 		}
 	}
-	queryString := fmt.Sprintf(`{"selector": {"_id": "%s" }}`, args[0])
+	queryString := fmt.Sprintf(`{"selector": {"serial": "%s" }}`, args[0])
 	key, queryResults, err := getQueryResultForQueryString(APIstub, queryString)
 	if err != nil {
-		return shim.Error(JSONResponseError(args[0], "ID referenced does not exist", 4))
+		return shim.Error(JSONResponseError(args[0], "Serial referenced does not exist", 4))
 	}
+
+	actualOwner := strings.ToLower(args[1])
+	newOwner := strings.ToLower(args[2])
 
 	if key != "" {
 		misterybox := Misterybox{}
@@ -158,18 +147,20 @@ func (s *SmartContract) transferMisterybox(APIstub shim.ChaincodeStubInterface, 
 			return shim.Error(JSONResponseError(args[0], "Error on parse json", 5))
 		}
 
-		if misterybox.Owner != args[1] {
+		if misterybox.Owner != actualOwner) {
 			return shim.Error(JSONResponseError(args[0], "Owner Incorrect", 20))
 		}
 
-		if misterybox.Owner == args[2] {
+		if misterybox.Owner == newOwner) {
 			return shim.Error(JSONResponseError(args[0], "New Owner is same actual owner", 21))
 		}
 
+
+		misterybox.Owner = newOwner
 		mtbxAsBytes, _ := json.Marshal(misterybox)
 		APIstub.PutState(key, mtbxAsBytes)
 
-		return shim.Success(JSONResponseSuccess(APIstub.GetTxID(), fmt.Sprintf("The new Owner is %s", args[2]), time.Now()))
+		return shim.Success(JSONResponseSuccess(APIstub.GetTxID(), fmt.Sprintf("The new Owner is %s", actualOwner), time.Now()))
 
 	}
 	return shim.Error(JSONResponseError(args[0], "Key referenced does not exist", 4))

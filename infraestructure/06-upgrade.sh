@@ -12,5 +12,5 @@ echo "upgrade chaincode"
 
 docker exec cli peer chaincode install -n $PROJECT_NAME -v $VERSION -p "$CC_SRC_PATH" -l "$LANGUAGE"
 sleep 5
-docker exec cli peer chaincode upgrade -o orderer.emerald.com:7050 -C jewelchannel -n $PROJECT_NAME -v $VERSION -c '{"Args":[""]}' -P "OR ('ClaroMSP.member','Org2MSP.member')"
+docker exec cli peer chaincode upgrade -o orderer.emerald.com:7050 -C jewelchannel -n $PROJECT_NAME -v $VERSION -c '{"Args":[""]}' -P "OR ('RubyMSP.member')"
 
