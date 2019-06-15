@@ -10,6 +10,9 @@ CHANNEL_NAME=jewelchannel
 rm -fr ./config/*
 rm -fr ./crypto-config/*
 
+mkdir ./config/
+mkdir ./crypto-config/
+
 # generate crypto material
 cryptogen generate --config=./crypto-config.yaml
 if [ "$?" -ne 0 ]; then

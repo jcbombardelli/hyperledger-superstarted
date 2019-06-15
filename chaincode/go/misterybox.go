@@ -110,13 +110,13 @@ func (s *SmartContract) createMisterybox(APIstub shim.ChaincodeStubInterface, ar
 
 		doctypeTxIndexKey, err := APIstub.CreateCompositeKey("doctype~tx", []string{mtbx.DocType, APIstub.GetTxID()})
 		if err != nil {
-			return shim.Error(JSONResponseError(stub.GetTxID(), PUTSTATE_ERROR_CODE, err.Error()))
+			return shim.Error(JSONResponseError(APIstub.GetTxID(), "Error on PutState : "+err.Error(), 99))
 		}
 
 		//  Save index entry to state. Only the key name is needed, no need to store a duplicate copy of the ccee.
 		//  Note - passing a 'nil' value will effectively delete the key from state, therefore we pass null character as value
 		value := []byte{0x00}
-		err = stub.PutState(hashTxIndexKey, value)
+		err = APIstub.PutState(doctypeTxIndexKey, value)
 		if err != nil {
 			return shim.Error(JSONResponseError("", "Error on PutState : "+err.Error(), 99))
 		}
