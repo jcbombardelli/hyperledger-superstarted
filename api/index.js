@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 
 app.use(timeout('45s'))
 
-const blockchain = require("../infraestructure/js/00-lib");
+const blockchain = require("../infrastructure/js/00-lib");
 
 app.get("/api/misterybox", async (req, res) => {
   res.setHeader("Content-Type", "application/json");

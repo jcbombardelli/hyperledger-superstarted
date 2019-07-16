@@ -147,14 +147,13 @@ func (s *SmartContract) transferMisterybox(APIstub shim.ChaincodeStubInterface, 
 			return shim.Error(JSONResponseError(args[0], "Error on parse json", 5))
 		}
 
-		if misterybox.Owner != actualOwner) {
+		if misterybox.Owner != actualOwner {
 			return shim.Error(JSONResponseError(args[0], "Owner Incorrect", 20))
 		}
 
-		if misterybox.Owner == newOwner) {
+		if misterybox.Owner == newOwner {
 			return shim.Error(JSONResponseError(args[0], "New Owner is same actual owner", 21))
 		}
-
 
 		misterybox.Owner = newOwner
 		mtbxAsBytes, _ := json.Marshal(misterybox)

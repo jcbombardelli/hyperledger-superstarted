@@ -5,7 +5,7 @@ LANGUAGE="golang"
 
 export MSYS_NO_PATHCONV=1
 
-CC_SRC_PATH=i3tech.com/emerald/misterybox/chaincode
+CC_SRC_PATH=i3tech.com/emerald/misterybox/chaincode/go
 
 
 echo "instantiate chaincode"

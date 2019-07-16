@@ -11,7 +11,7 @@ services:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca.emerald.com
       - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.ruby.emerald.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/SUBSTITUIR_PELA_CHAVE_sk
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/d78baa565c5cb9e2495e5d8e830dd1cfec182758530c30862df71dd6c08addeb_sk
     restart: always
     ports:
       - "7054:7054"
@@ -110,7 +110,8 @@ services:
     command: /bin/bash
     volumes:
         - /var/run/:/host/var/run/
-        - ../chaincode/go/:/opt/gopath/src/i3tech.com/emerald/misterybox/chaincode/
+        - ../chaincode/go/:/opt/gopath/src/i3tech.com/emerald/misterybox/chaincode/go
+        - ../chaincode/java/:/opt/gopath/src/i3tech.com/emerald/misterybox/chaincode/java
         - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
         - $HOME/go/:/opt/gopath/
     networks:
