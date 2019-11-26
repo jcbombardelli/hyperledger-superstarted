@@ -19,6 +19,7 @@
 /infrastructure/config
 /infrastructure/crypto-config
 /infrastructure/hfc-key-store
+/infraestructure/fabric-samples/
 
 /chaincode/java/build
 /chaincode/java/.gradle
@@ -28,5 +29,3 @@
 /chaincode/java/.settings
 
 \.vscode/
-
-infraestructure/fabric-samples/
